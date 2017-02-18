@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ImageView logo = (ImageView) findViewById(R.id.logo1);
         StorageReference logo1 = storage.getReference().child("logo1.jpg");
+        String whatever;
 
 
         // set the view now
