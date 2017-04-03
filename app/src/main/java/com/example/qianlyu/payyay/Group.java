@@ -17,6 +17,9 @@ public class Group {
     // bills that are concerned with this group;
     private List<String> m_billGroups = new ArrayList<>();
 
+    public final static String GROUP_NAME = "groupName";
+    public final static String USER_GROUP = "userGroup";
+
     public Group(String groupID){
         m_groupID = groupID;
     }

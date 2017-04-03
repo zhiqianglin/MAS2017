@@ -21,6 +21,8 @@ public class Event {
 
     public static String BILLS = "bills";
     public static String PARTICIPANTS = "participants";
+    public static String TIME = "time";
+    public static String DESCRIPTION = "description";
 
     public Event(String ID){
         m_eventID = ID;
@@ -33,6 +35,7 @@ public class Event {
     public void setParticipant(String ID, String name){
         m_participantsIDtoName.put(ID, name);
         m_participantsNametoID.put(name, ID);
+        System.out.println("participant: " + "ID: " + ID + " name: " + name);
     }
 
     public void setDescription(String des){
@@ -49,6 +52,10 @@ public class Event {
 
     public List<Bill> getAllBills(){
         return m_bills;
+    }
+
+    public List<String> getAllParticipants(){
+        return new ArrayList<>(m_participantsNametoID.keySet());
     }
 
     public String getParticipantNamebyID(String ID){

@@ -17,66 +17,80 @@ public class Bill {
     public static int SPLIT_BY_ADJUSTMENT = 4;
 
     private String m_billID;
-    private Group m_group;
+    private HashMap<String, Double> bill_details = new HashMap<>();
 
     private String m_loaner;
+    private String m_create_time;
+    private String m_amount;
 
-    private HashMap<String, Double> m_getMoney = new HashMap<>();
-    private HashMap<String, Double> m_returnMoney = new HashMap<>();
+    public static String LOANER = "loaner";
+    public static String DESCRIPTION = "description";
+    public static String BORROWER = "borrower";
+    public static String CREATED_TiME = "createdTime";
+    public static String REMAINING = "remaining";
+    public static String AMOUNT = "amount";
+    public static String[] current_type = new String[]{"US Dollor", "Euro", "Japanese Yen"
+            , "Great British Pound", "Swiss Franc", "Canadian Dollar"};
+    public static double[] current_ratio = new double[]{1, 1.086, 0.0090319, 1.2563, 1.0143, 0.7472};
 
-    private int m_splitMethod;
+    public String m_description;
 
-    private double m_moneyInvolved;
-
-    public Bill(String billID, int splitMethod, double money){
+    public Bill(String billID){
         m_billID = billID;
-        m_splitMethod = splitMethod;
-        m_moneyInvolved = money;
     }
 
-    public void setGroupID(Group group){
-        m_group = group;
+    public void addDescription(String description){
+        m_description = description;
+    }
+
+    public void addBillDetails(String involved_person, double money){
+        bill_details.put(involved_person, money);
+    }
+
+    public void setAmount(String amount){
+        m_amount = amount;
     }
 
     public void setLoaners(String loaner){
         m_loaner = loaner;
     }
 
+    public void setCreatedTime(String date){
+        m_create_time = date;
+    }
+
+    public String getAmount(){
+        return m_amount;
+    }
+
     public String getBillID(){
         return m_billID;
     }
 
-    public Group getGroupID(){
-        return m_group;
+    public String getCreatedTime(){
+        return m_create_time;
+    }
+
+    public HashMap<String, Double> getBillDetails(){
+        return bill_details;
+    }
+
+    public List<String> getAllParticipants(){
+        List<String> result = new ArrayList<>();
+        for(String participantID:bill_details.keySet()){
+            if(participantID.equals(User.curr_user.getUserID()))
+                result.add(User.curr_user.getPreferredName());
+            else
+                result.add(User.curr_user.getFriendByID(participantID));
+        }
+        return result;
     }
 
     public String getLoaner(){
         return m_loaner;
     }
 
-    public void calSolution(){
-        if(m_splitMethod == Bill.SPLIT_EQUALLY){
-            List<String> members = m_group.getGroupMembers();
-            double money_share = m_moneyInvolved / m_group.getGroupSize();
-            if(members.contains(m_loaner)){
-                for(String userID:members)
-                    m_returnMoney.put(userID, money_share);
-                m_getMoney.put(m_loaner, m_moneyInvolved - money_share);
-            }else{
-                m_getMoney.put(m_loaner, m_moneyInvolved);
-                for(String userID:members)
-                    m_returnMoney.put(userID, money_share);
-            }
-        } else if (m_splitMethod == Bill.SPLIT_UNEQUALLY) {
-
-        } else if (m_splitMethod == Bill.SPLIT_BY_SHARES) {
-
-        } else if (m_splitMethod == Bill.SPLIT_BY_PERCENTAGES) {
-
-        } else if (m_splitMethod == Bill.SPLIT_BY_ADJUSTMENT){
-
-        } else {
-            System.out.println("Unrecognized Split Method!");
-        }
+    public String getDescription(){
+        return m_description;
     }
 }

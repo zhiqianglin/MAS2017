@@ -1,5 +1,6 @@
 package com.example.qianlyu.payyay;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -55,8 +56,10 @@ public class AddFriendActivity extends AppCompatActivity {
                             } else {
                                 String userID = dataSnapshot.getValue(String.class);
                                 System.out.println("userID: " + userID);
-                                m_ref.child("users").child(user.getUid()).child("friends")
+                                m_ref.child("users").child(user.getUid()).child(User.FRIENDS)
                                         .child(userID).setValue("true");
+                                Toast.makeText(AddFriendActivity.this, "Add friend Success!", Toast.LENGTH_LONG).show();
+                                finish();
                             }
                         }
 
@@ -64,14 +67,12 @@ public class AddFriendActivity extends AppCompatActivity {
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
+                    startActivity(new Intent(AddFriendActivity.this, FriendListActivity.class));
+                    finish();
                 }
             }
         });
 
-
-    }
-
-    public void getUserByEmail(String emailAddress){
 
     }
 

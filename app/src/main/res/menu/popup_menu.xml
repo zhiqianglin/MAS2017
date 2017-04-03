@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/split_method_one"
+        android:title="Split equally"/>
+    <item
+        android:id="@+id/split_method_two"
+        android:title="Split unequally"/>
+    <item
+        android:id="@+id/split_method_three"
+        android:title="Split by percentages"/>
+
+    <item
+        android:id="@+id/split_method_four"
+        android:title="Split by shares"/>
+
+    <item
+        android:id="@+id/split_method_five"
+        android:title="Split by adjustment"/>
 
 </menu>
